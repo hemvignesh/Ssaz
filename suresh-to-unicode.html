@@ -1,0 +1,167 @@
+<title>Unicode Saurashtra</title>
+
+<style>
+  :root {
+    color-scheme: light dark;
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content min-content 1fr min-content;
+    gap: 12px;
+  }
+
+  header, footer {
+    grid-column: 1/3;
+    text-align: center;
+  }
+
+  main {
+    display: contents;
+  }
+
+  textarea {
+    font-size: 2rem;
+    resize: none;
+  }
+
+  textarea#-suresh{
+    font-family: "Suresh", sans-serif;
+  }
+
+  textarea#-suresh:placeholder-shown::after {
+    content: 'Paste text here';
+    background: red;
+  }
+
+  textarea#-unicode{
+    font-family: "Noto Sans Saurashtra", sans-serif;
+    border: none;
+  }
+</style>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Saurashtra:wght@400&display=swap">
+
+<header>
+  <h1>Unicode Saurashtra - Convert Suresh Saurashtra font to Unicode symbols</h1>
+</header>
+
+<main>
+  <span>Paste text in Suresh font below. If Suresh font is locally installed you will see Saurashtra characters. Otherwise you will see English.</span>
+  <span>Equivalent Saurashtra characters in Unicode.</span>
+  <textarea id="-suresh" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="SnBnsoB mgjsMB bmZcB OabBmgba"></textarea>
+  <textarea id="-unicode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly></textarea>
+</main>
+
+<footer>
+  Based <a href="http://www.palkar.org/dwnload/Sourashtra_Font_Keyboard_Layout.pdf">keyboard layout</a> and fonts from <a href="http://palkar.org/dwnload.shtml">palkar.org</a>.
+</footer>
+
+<script type="text/javascript">
+  (function() {
+    const sureshToUnicode = new Map([
+      ['1', '꣑'],
+      ['!', '꣎'],
+      ['2', '꣒'],
+      ['@', 'ꢴ'],
+      ['3', '꣓'],
+      ['#', 'ꢀ'],
+      ['4', '꣔'],
+      ['$', 'ꢁ'],
+      ['5', '꣕'],
+      ['%', 'ꢉ'],
+      ['6', '꣖'],
+      ['^', 'ꢻ'],
+      ['7', '꣗'],
+      ['&', 'ꢼ'],
+      ['8', '꣘'],
+      ['*', 'ꢒ꣄ꢰ'], // Symbol missing in Unicode.
+      ['9', '꣙'],
+      ['0', '꣐'],
+      ['=', 'ꢺ'],
+      ['+', 'ꢈ'],
+      ['q', 'ꢿ'],
+      ['Q', 'ꢑ'],
+      ['w', 'ꣀ'],
+      ['W', 'ꢎ'],
+      ['e', 'ꢵ'],
+      ['E', 'ꢃ'],
+      ['r', 'ꣃ'],
+      ['R', 'ꢅ'],
+      ['t', 'ꢹ'],
+      ['T', 'ꢇ'],
+      ['y', 'ꢨ'],
+      ['Y', 'ꢩ'],
+      ['u', 'ꢲ'],
+      ['U', 'ꢖ'],
+      ['i', 'ꢔ'],
+      ['I', 'ꢕ'],
+      ['o', 'ꢣ'],
+      ['O', 'ꢤ'],
+      ['p', 'ꢙ'],
+      ['P', 'ꢚ'],
+      ['[', 'ꢞ'],
+      ['{', 'ꢟ'],
+      [']', 'ꢛ'],
+      ['}', 'ꢰ'],
+      ['\\', 'ꢊ'],
+      ['|', 'ꢋ'],
+      ['a', 'ꣁ'],
+      ['A', 'ꢏ'],
+      ['s', 'ꢾ'],
+      ['S', 'ꢌ'],
+      ['d', 'ꢗ'],
+      ['D', 'ꢘ'],
+      ['f', 'ꣂ'],
+      ['F', 'ꢄ'],
+      ['g', 'ꢸ'],
+      ['G', 'ꢆ'],
+      ['h', 'ꢦ'],
+      ['H', 'ꢧ'],
+      ['j', 'ꢬ'],
+      ['J', 'ꢍ'],
+      ['k', 'ꢒ'],
+      ['K', 'ꢓ'],
+      ['l', 'ꢡ'],
+      ['L', 'ꢢ'],
+      ['z', 'ꢂ'],
+      ['Z', 'ꢥ'],
+      ['x', 'ꢫ'],
+      ['X', 'ꢜ'],
+      ['c', 'ꢪ'],
+      ['C', 'ꢠ'],
+      ['v', 'ꢶ'],
+      ['V', 'ꢷ'],
+      ['b', 'ꢮ'],
+      ['B', '꣄'],
+      ['n', 'ꢭ'],
+      ['N', 'ꢳ'],
+      ['m', 'ꢱ'],
+      ['M', 'ꢯ'],
+      ['<', 'ꢝ'],
+      ['>', 'ꢐ'],
+    ]);
+
+    function toUnicode(text) {
+      let unicode = '';
+      for (const char of text) {
+        // Convert !! to double danda (a missing character). Since these fonts
+        // were meant for human visual consumption, this conversion seems
+        // reasonable.
+        if (char === '!' && unicode[unicode.length - 1] === sureshToUnicode.get('!')) {
+          unicode = unicode.substring(0, unicode.length - 1) + '꣏';
+          continue;
+        }
+
+        unicode += sureshToUnicode.get(char) ?? char;
+      }
+      return unicode;
+    }
+
+    const suresh = document.getElementById('-suresh');
+    const unicode = document.getElementById('-unicode');
+    suresh.addEventListener('input', e => {
+      unicode.value = toUnicode(suresh.value);
+    });
+  })();
+</script>
