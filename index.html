@@ -48,7 +48,10 @@
 
 <main>
   <span>Paste text in Suresh font below. If Suresh font is locally installed you will see Saurashtra characters. Otherwise you will see English.</span>
-  <span>Equivalent Saurashtra characters in Unicode.</span>
+  <div>
+    Equivalent Saurashtra characters in Unicode.
+    <button id="-copy-unicode">Copy text</button>
+  </div>
   <textarea id="-suresh" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="SnBnsoB mgjsMB bmZcB OabBmgba"></textarea>
   <textarea id="-unicode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly></textarea>
 </main>
@@ -162,6 +165,11 @@
     const unicode = document.getElementById('-unicode');
     suresh.addEventListener('input', e => {
       unicode.value = toUnicode(suresh.value);
+    });
+
+    document.getElementById('-copy-unicode').addEventListener('click', () => {
+      unicode.select();
+      document.execCommand('copy');
     });
   })();
 </script>
